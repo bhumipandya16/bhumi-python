@@ -1,0 +1,46 @@
+<joblist>
+  <job>
+    <context>
+      <options preserveOrder='true'>
+        <option name='email_to' required='true' value='bhumika.pandya@key.me'>
+          <description>email to </description>
+        </option>
+        <option enforcedvalues='true' name='filter' required='true' value='production' values='manufacturing,production'>
+          <description>Filter kiosks for manufacturing or production </description>
+        </option>
+      </options>
+    </context>
+    <description></description>
+    <executionEnabled>true</executionEnabled>
+    <group>Analysis</group>
+    <id>acd20334-ad27-47b9-a568-7e507d027452</id>
+    <loglevel>INFO</loglevel>
+    <name> kiosk git version check</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <schedule>
+      <month month='*' />
+      <time hour='09' minute='05' seconds='0' />
+      <weekday day='FRI,MON,SAT,SUN,TUE' />
+      <year year='*' />
+    </schedule>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <script><![CDATA[#!/bin/bash
+
+echo "check software version"
+argument="$1 -f $2"
+echo "Running command : /tmp/ts-servicing-ops/scripts/software_version_check.py $argument"
+python /tmp/ts-servicing-ops/scripts/software_version_check.py $argument
+if [ $? == 0 ]; then
+  echo "Successfully completed job, check your Email!"
+else
+  echo "Failed to run job"
+  exit 1
+fi]]></script>
+        <scriptargs>${option.email_to} ${option.filter}</scriptargs>
+      </command>
+    </sequence>
+    <uuid>acd20334-ad27-47b9-a568-7e507d027452</uuid>
+  </job>
+</joblist>
