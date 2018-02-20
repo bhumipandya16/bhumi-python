@@ -11,7 +11,7 @@ to hardware. Thus, in order to run this job:
       <excludePrecedence>true</excludePrecedence>
       <keepgoing>true</keepgoing>
       <rankOrder>ascending</rankOrder>
-      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <successOnEmptyNodeFilter>true</successOnEmptyNodeFilter>
       <threadcount>5</threadcount>
     </dispatch>
     <executionEnabled>true</executionEnabled>

@@ -19,7 +19,7 @@ be in all lower-case with `_` for spaces. E.g., `california_republic`.]]></descr
       <excludePrecedence>true</excludePrecedence>
       <keepgoing>false</keepgoing>
       <rankOrder>ascending</rankOrder>
-      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <successOnEmptyNodeFilter>true</successOnEmptyNodeFilter>
       <threadcount>20</threadcount>
     </dispatch>
     <executionEnabled>true</executionEnabled>

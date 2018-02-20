@@ -13,7 +13,7 @@ Intended to run after magazine refills, we want to catch the pick up issues befo
       <excludePrecedence>true</excludePrecedence>
       <keepgoing>true</keepgoing>
       <rankOrder>ascending</rankOrder>
-      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <successOnEmptyNodeFilter>true</successOnEmptyNodeFilter>
       <threadcount>10</threadcount>
     </dispatch>
     <executionEnabled>true</executionEnabled>
@@ -38,7 +38,6 @@ Intended to run after magazine refills, we want to catch the pick up issues befo
     <scheduleEnabled>true</scheduleEnabled>
     <sequence keepgoing='false' strategy='node-first'>
       <command>
-        <plugins />
         <script><![CDATA[#!/bin/bash
 # script to test pickup for all magazines
 
