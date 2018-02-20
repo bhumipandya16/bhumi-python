@@ -31,7 +31,7 @@
     <scheduleEnabled>true</scheduleEnabled>
     <sequence keepgoing='false' strategy='node-first'>
       <command>
-        <script><![CDATA[echo "bhumi here and trying it again "]]></script>
+        <script><![CDATA[echo "howard trying it again "]]></script>
         <scriptargs />
       </command>
     </sequence>
