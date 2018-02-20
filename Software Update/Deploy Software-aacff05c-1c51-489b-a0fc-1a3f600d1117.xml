@@ -21,7 +21,6 @@
     </dispatch>
     <executionEnabled>true</executionEnabled>
     <group>Software Update</group>
-    <id>aacff05c-1c51-489b-a0fc-1a3f600d1117</id>
     <loglevel>INFO</loglevel>
     <multipleExecutions>true</multipleExecutions>
     <name>Deploy Software</name>
@@ -41,6 +40,5 @@ fab @option.ForceOutOfServiceMode@ repo:update_cache @option.RunSalt@ deploy:sof
         <scriptargs>${option.ForceOutOfServiceMode} ${option.RunSalt} ${option.Restart_procecss}</scriptargs>
       </command>
     </sequence>
-    <uuid>aacff05c-1c51-489b-a0fc-1a3f600d1117</uuid>
   </job>
 </joblist>

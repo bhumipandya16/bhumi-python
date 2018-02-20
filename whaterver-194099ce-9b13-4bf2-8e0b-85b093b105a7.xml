@@ -2,7 +2,6 @@
   <job>
     <description></description>
     <executionEnabled>true</executionEnabled>
-    <id>194099ce-9b13-4bf2-8e0b-85b093b105a7</id>
     <loglevel>INFO</loglevel>
     <name>whaterver</name>
     <nodeFilterEditable>false</nodeFilterEditable>
@@ -13,6 +12,5 @@
         <scriptargs />
       </command>
     </sequence>
-    <uuid>194099ce-9b13-4bf2-8e0b-85b093b105a7</uuid>
   </job>
 </joblist>

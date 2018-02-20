@@ -24,7 +24,6 @@ be in all lower-case with `_` for spaces. E.g., `california_republic`.]]></descr
     </dispatch>
     <executionEnabled>true</executionEnabled>
     <group>Utils/Inventory</group>
-    <id>b4652fec-7742-4959-8d28-4ba295c4934c</id>
     <loglevel>INFO</loglevel>
     <multipleExecutions>true</multipleExecutions>
     <name>Set Inventory</name>
@@ -45,6 +44,5 @@ be in all lower-case with `_` for spaces. E.g., `california_republic`.]]></descr
       </command>
     </sequence>
     <timeout>10m</timeout>
-    <uuid>b4652fec-7742-4959-8d28-4ba295c4934c</uuid>
   </job>
 </joblist>

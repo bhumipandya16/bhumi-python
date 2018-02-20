@@ -18,7 +18,6 @@ Intended to run after magazine refills, we want to catch the pick up issues befo
     </dispatch>
     <executionEnabled>true</executionEnabled>
     <group>Utils</group>
-    <id>7b2c3f1c-0339-4fd9-b42c-f176465352ec</id>
     <loglevel>INFO</loglevel>
     <multipleExecutions>true</multipleExecutions>
     <name>Test Key Pick Ups</name>
@@ -61,6 +60,5 @@ echo "Running script :  /kiosk/cutter/calibration/cut_key_set.py --full_set --pi
       </command>
     </sequence>
     <timeout>2h</timeout>
-    <uuid>7b2c3f1c-0339-4fd9-b42c-f176465352ec</uuid>
   </job>
 </joblist>

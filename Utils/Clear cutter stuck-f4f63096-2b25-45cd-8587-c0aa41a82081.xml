@@ -16,7 +16,6 @@ to hardware. Thus, in order to run this job:
     </dispatch>
     <executionEnabled>true</executionEnabled>
     <group>Utils</group>
-    <id>f4f63096-2b25-45cd-8587-c0aa41a82081</id>
     <loglevel>INFO</loglevel>
     <multipleExecutions>true</multipleExecutions>
     <name>Clear cutter stuck</name>
@@ -97,6 +96,5 @@ fi]]></script>
       </command>
     </sequence>
     <timeout>5m</timeout>
-    <uuid>f4f63096-2b25-45cd-8587-c0aa41a82081</uuid>
   </job>
 </joblist>

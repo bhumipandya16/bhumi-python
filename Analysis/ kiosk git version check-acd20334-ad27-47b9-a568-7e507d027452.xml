@@ -13,7 +13,6 @@
     <description></description>
     <executionEnabled>true</executionEnabled>
     <group>Analysis</group>
-    <id>acd20334-ad27-47b9-a568-7e507d027452</id>
     <loglevel>INFO</loglevel>
     <name> kiosk git version check</name>
     <nodeFilterEditable>true</nodeFilterEditable>
@@ -41,6 +40,5 @@ fi]]></script>
         <scriptargs>${option.email_to} ${option.filter}</scriptargs>
       </command>
     </sequence>
-    <uuid>acd20334-ad27-47b9-a568-7e507d027452</uuid>
   </job>
 </joblist>

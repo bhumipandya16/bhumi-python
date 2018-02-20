@@ -21,7 +21,6 @@ You can ask TS to get specific value name]]></description>
     </dispatch>
     <executionEnabled>true</executionEnabled>
     <group>Read Only Tasks</group>
-    <id>afb149f2-dd74-4e43-b4e6-430db1123358</id>
     <loglevel>INFO</loglevel>
     <multipleExecutions>true</multipleExecutions>
     <name>Get GUI configuration</name>
@@ -47,6 +46,5 @@ fi]]></script>
       </command>
     </sequence>
     <timeout>2m</timeout>
-    <uuid>afb149f2-dd74-4e43-b4e6-430db1123358</uuid>
   </job>
 </joblist>
