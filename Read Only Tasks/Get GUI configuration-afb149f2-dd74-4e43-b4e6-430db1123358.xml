@@ -1,0 +1,52 @@
+<joblist>
+  <job>
+    <context>
+      <options preserveOrder='true'>
+        <option enforcedvalues='true' name='file_name' required='true' value='screens' values='abilities,dropoff_chute,faqs,ga,gui,kiosk_statuses,media,ports,promotion,screens,select_style_item_detail,survey'>
+          <description>Enter folder for gui config, You may need to ask TS for specif name of file and variable</description>
+        </option>
+        <option name='value' values='cart,home,home.enable_rfid,in_store_confirmation,insert_for_copy,select_style,volume'>
+          <description><![CDATA[Enter correct gui value, if value is nested (ex: {key1:{key2:...}}) , you can use value=key1 or value=key1.key2
+You can ask TS to get specific value name]]></description>
+        </option>
+      </options>
+    </context>
+    <description>Get GUI related configurations. Contact TS to get specific file name and value.</description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>true</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>30</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>Read Only Tasks</group>
+    <id>afb149f2-dd74-4e43-b4e6-430db1123358</id>
+    <loglevel>INFO</loglevel>
+    <multipleExecutions>true</multipleExecutions>
+    <name>Get GUI configuration</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>tags:deployed</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <script><![CDATA[#! /bin/bash
+file=$1
+value=$2
+
+/kiosk/scripts/get_config.py gui5 $file $value | python -mjson.tool |
+if read line1  && [ "$line1" != null ]; then
+    echo "$line1"; cat
+else
+    { /kiosk/scripts/get_config.py gui5 $file | python -mjson.tool | grep -w $value; } || echo "'$value' not found"
+fi]]></script>
+        <scriptargs>${option.file_name} ${option.value} </scriptargs>
+      </command>
+    </sequence>
+    <timeout>2m</timeout>
+    <uuid>afb149f2-dd74-4e43-b4e6-430db1123358</uuid>
+  </job>
+</joblist>
