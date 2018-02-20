@@ -1,0 +1,41 @@
+<joblist>
+  <job>
+    <description></description>
+    <executionEnabled>true</executionEnabled>
+    <id>1d006bdf-156b-4f4d-9ddb-786126438cfb</id>
+    <loglevel>INFO</loglevel>
+    <name>Test </name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <script><![CDATA[#!/usr/bin/env python3
+
+import argparse
+import json
+import os
+import sys
+import subprocess
+import smtplib
+import time
+
+from email.mime.text import MIMEText
+
+
+def send_email(host,message, subject, email_to, email_from = 'kiosk@key.me'):
+    msg = MIMEText(message)
+    msg['Subject'] = subject
+    msg['From'] = email_from
+    msg['To'] = ' '.join(email_to)
+    s = smtplib.SMTP(host)
+    s.sendmail(email_from, email_to, msg.as_string())
+    s.quit()
+
+if __name__ == '__main__':
+    send_email("localhost", "test_email", "subject","bhumika.pandya@key.me")]]></script>
+        <scriptargs />
+      </command>
+    </sequence>
+    <uuid>1d006bdf-156b-4f4d-9ddb-786126438cfb</uuid>
+  </job>
+</joblist>

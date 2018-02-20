@@ -1,0 +1,40 @@
+<joblist>
+  <job>
+    <description></description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>1</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <id>cb65e74a-c46d-4c5d-b6a2-305f4337ca81</id>
+    <loglevel>INFO</loglevel>
+    <name>test job</name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <nodefilters>
+      <filter>.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>true</nodesSelectedByDefault>
+    <notification>
+      <onfailure>
+        <webhook urls='https://hooks.slack.com/services/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' />
+      </onfailure>
+      <onstart>
+        <webhook urls='https://hooks.slack.com/services/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' />
+      </onstart>
+      <onsuccess>
+        <webhook urls='https://hooks.slack.com/services/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' />
+      </onsuccess>
+    </notification>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <script><![CDATA[echo "bhumi here"]]></script>
+        <scriptargs />
+      </command>
+    </sequence>
+    <uuid>cb65e74a-c46d-4c5d-b6a2-305f4337ca81</uuid>
+  </job>
+</joblist>

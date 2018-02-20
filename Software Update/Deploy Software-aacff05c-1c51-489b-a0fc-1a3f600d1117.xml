@@ -1,0 +1,46 @@
+<joblist>
+  <job>
+    <context>
+      <options preserveOrder='true'>
+        <option name='ForceOutOfServiceMode' values='command:stop-all' />
+        <option name='RunSalt' values='deploy:salt'>
+          <description>Should salt run?</description>
+        </option>
+        <option name='Restart_procecss' values='ABILITIES_MANAGER,ADVERTISER,AUTOCAL,BACKEND,BACKGROUND_DL,BROWSER,CREDIT_CARD,CUTTER,DET,DET_BITTING_LEFT,DET_BITTING_RIGHT,DET_MILLING,DEVICE_DIRECTOR,FINGER,GRIPPER_CAM,GUI,INVENTORY,IO,MANAGER,MOTION,ORDER_DISPATCHER,POWER_MONITOR,RFID_READER,SECURITY_CAMERA,TRANSPONDER,UPLOADER,all,none'>
+          <description>Specify process name if only specific process needs restart after software update</description>
+        </option>
+      </options>
+    </context>
+    <description>Deploy newest software to a kiosk.</description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>true</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>true</successOnEmptyNodeFilter>
+      <threadcount>19</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>Software Update</group>
+    <id>aacff05c-1c51-489b-a0fc-1a3f600d1117</id>
+    <loglevel>INFO</loglevel>
+    <multipleExecutions>true</multipleExecutions>
+    <name>Deploy Software</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>name: nsl434</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>true</nodesSelectedByDefault>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <script><![CDATA[if @option.Restart_procecss@; then
+  cmd='deploy:restart,@option.Restart_procecss@'
+fi
+echo $cmd
+fab @option.ForceOutOfServiceMode@ repo:update_cache @option.RunSalt@ deploy:software_update $cmd]]></script>
+        <scriptargs>${option.ForceOutOfServiceMode} ${option.RunSalt} ${option.Restart_procecss}</scriptargs>
+      </command>
+    </sequence>
+    <uuid>aacff05c-1c51-489b-a0fc-1a3f600d1117</uuid>
+  </job>
+</joblist>

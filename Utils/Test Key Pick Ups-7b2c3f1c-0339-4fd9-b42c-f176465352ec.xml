@@ -1,0 +1,67 @@
+<joblist>
+  <job>
+    <context>
+      <options preserveOrder='true'>
+        <option enforcedvalues='true' name='Interrupt' required='true' value='No' values='No,Yes'>
+          <description>script will run without checking for kiosk state (mail order , maintainance, service) and  activity</description>
+        </option>
+      </options>
+    </context>
+    <description><![CDATA[This job will test pick up on all magazines, disables bad pickups and throws a JIRA ticket.
+Intended to run after magazine refills, we want to catch the pick up issues before a customer does.]]></description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>true</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>10</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>Utils</group>
+    <id>7b2c3f1c-0339-4fd9-b42c-f176465352ec</id>
+    <loglevel>INFO</loglevel>
+    <multipleExecutions>true</multipleExecutions>
+    <name>Test Key Pick Ups</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>ns(.*) </filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <notification>
+      <onfailure>
+        <webhook urls='https://integration.production.keymecloud.com/rundeck?id=${execution.id}&amp;job=${job.name}&amp;user=${execution.user}' />
+      </onfailure>
+      <onstart>
+        <webhook urls='https://integration.production.keymecloud.com/rundeck?id=${execution.id}&amp;job=${job.name}&amp;user=${execution.user}' />
+      </onstart>
+    </notification>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <plugins />
+        <script><![CDATA[#!/bin/bash
+# script to test pickup for all magazines
+
+interrupt=$1
+last_configuration=$(/kiosk/manager/tools/get_status.py -p MANAGER -k configuration.file | tr -d \' )
+if  [ $interrupt = "No" ]; then
+  case $last_configuration in
+    maintenance_processes.json|mail_order_only_processes.json|service_processes.json)
+      echo "Aborting this job, its not safe to run this script for this process list " $last_configuration
+      echo "You can set interrupt options to Yes if you still want to run this script"
+      exit 1;;
+    processes.json)
+      cd /kiosk/ && (while ! /kiosk/gui/scripts/activity_check.py; do sleep 10; echo "Kiosk is active!"; done);;
+  esac
+fi
+/kiosk/manager/tools/control.py --load /kiosk/manager/config/cmd_line_processes.json -q
+echo "Running script :  /kiosk/cutter/calibration/cut_key_set.py --full_set --pick_only --disable --no_reset_position "
+/kiosk/cutter/calibration/cut_key_set.py --full_set --pick_only --disable --no_reset_position
+/kiosk/manager/tools/control.py --load $last_configuration -q]]></script>
+        <scriptargs>${option.Interrupt}</scriptargs>
+      </command>
+    </sequence>
+    <timeout>2h</timeout>
+    <uuid>7b2c3f1c-0339-4fd9-b42c-f176465352ec</uuid>
+  </job>
+</joblist>

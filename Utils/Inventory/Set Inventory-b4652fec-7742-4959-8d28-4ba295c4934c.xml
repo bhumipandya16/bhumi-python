@@ -1,0 +1,50 @@
+<joblist>
+  <job>
+    <context>
+      <options preserveOrder='true'>
+        <option name='1_magazine' regex='(20)|(1[0-9])|([1-9])' required='true' />
+        <option name='2_count' regex='[0-9]*' required='true' value='155' />
+        <option name='3_milling' regex='[0-9a-z\-]+' required='true' value='kw1' values='am6,ar1,ar3,co-a1001grm,co106,co88,hl1-m,kw1,kw10,kw5,l1,m1,m10,na14,sc1,sc19,sc20,sc4,se1,wr5,y1,y11,y13' />
+        <option name='4_style' regex='[0-9a-z_]+' required='true' values='49ers,american_flag,bohk,boise_broncos,boston_transit,california_republic,chicago_marquee,chicago_transit,cowboys,dots,eagles,high_performance_plain,lakers,ohio_state_buckeyes,patriots,phillies,plain,redskins,redsox,sf_giants,subway,taxi,texas,universtity_of_north_carolina,world_war_two,yankees'>
+          <description><![CDATA[Select style from availabel options to right, or supply style name, which must
+be in all lower-case with `_` for spaces. E.g., `california_republic`.]]></description>
+        </option>
+        <option name='5_cost' regex='[1-9][0-9]?\.[0-9]{2}' required='true' value='1.00'>
+          <description>E.g. `1.00` or `19.99`</description>
+        </option>
+      </options>
+    </context>
+    <description>Set the inventory for a specified magazine on the selected kiosks</description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>false</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>20</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>Utils/Inventory</group>
+    <id>b4652fec-7742-4959-8d28-4ba295c4934c</id>
+    <loglevel>INFO</loglevel>
+    <multipleExecutions>true</multipleExecutions>
+    <name>Set Inventory</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>ns.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <description>Backup the existing stock file to /tmp/</description>
+        <exec>fab backup_files:/kiosk/config/inventory/stock.json</exec>
+      </command>
+      <command>
+        <description>Change inventory</description>
+        <exec>yes | /kiosk/inventory/scripts/make_changes.py ${option.1_magazine}=${option.2_count}:${option.3_milling}:${option.4_style}:${option.5_cost}</exec>
+      </command>
+    </sequence>
+    <timeout>10m</timeout>
+    <uuid>b4652fec-7742-4959-8d28-4ba295c4934c</uuid>
+  </job>
+</joblist>

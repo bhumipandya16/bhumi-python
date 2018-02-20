@@ -1,0 +1,102 @@
+<joblist>
+  <job>
+    <description><![CDATA[Clear a stuck lock after a tech has inspected and fixed any mechanical problems
+
+Clearing stuck locks when parts are out of place can cause considerabel damage
+to hardware. Thus, in order to run this job:
+
+* **The tech must first verify that everything is in place and make sure no exposed keys from magazine**
+* **The kiosk door must be open**]]></description>
+    <dispatch>
+      <excludePrecedence>true</excludePrecedence>
+      <keepgoing>true</keepgoing>
+      <rankOrder>ascending</rankOrder>
+      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <threadcount>5</threadcount>
+    </dispatch>
+    <executionEnabled>true</executionEnabled>
+    <group>Utils</group>
+    <id>f4f63096-2b25-45cd-8587-c0aa41a82081</id>
+    <loglevel>INFO</loglevel>
+    <multipleExecutions>true</multipleExecutions>
+    <name>Clear cutter stuck</name>
+    <nodeFilterEditable>true</nodeFilterEditable>
+    <nodefilters>
+      <filter>ns.*</filter>
+    </nodefilters>
+    <nodesSelectedByDefault>false</nodesSelectedByDefault>
+    <notification>
+      <onfailure>
+        <webhook urls='https://integration.production.keymecloud.com/rundeck?id=${execution.id}&amp;job=${job.name}&amp;user=${execution.user}&amp;trigger=${notification.trigger}' />
+      </onfailure>
+      <onstart>
+        <webhook urls='https://integration.production.keymecloud.com/rundeck?id=${execution.id}&amp;job=${job.name}&amp;user=${execution.user}' />
+      </onstart>
+      <onsuccess>
+        <webhook urls='https://integration.production.keymecloud.com/rundeck?id=${execution.id}&amp;job=${job.name}&amp;user=${execution.user}&amp;trigger=${notification.trigger}' />
+      </onsuccess>
+    </notification>
+    <scheduleEnabled>false</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <script><![CDATA[#!/bin/bash
+# Rundeck script to rm cutter stuck
+
+degradations () {
+    /kiosk/manager/tools/get_status.py -k degraded_data -j
+}
+
+door_is_open () {
+    degradations | grep -q door_closed
+}
+
+kiosk_is_degraded () {
+    [ -n "$(degradations)" ]
+}
+
+is_cutter_stuck () {
+     degradations | grep -q cutter_stuck
+}
+
+cannot_cut_keys () {
+     degradations | grep -q can_cut_keys
+}
+
+if door_is_open
+then
+    counter=0
+    echo "Door is open"
+    if is_cutter_stuck; then
+        printf "Reading file state/cutter.json: $(</kiosk/state/cutter.json)"
+        printf "\nClearing STUCKLOCK.....\n"
+        # scripts to clear exposed_key and unstuck
+        /kiosk/cutter/shared/cutter_state.py --clear-exposed-key-lock
+        /kiosk/cutter/shared/cutter_state.py --remove-stuck
+        echo "state/STUCKLOCK has been removed"
+        # Will wait for 30 seconds, to verify kiosk regains can_cut_keys ability
+        while cannot_cut_keys
+        do
+            if [ $counter -gt 6 ]
+            then
+                printf "\nKiosk still cannot cut keys.\nIt has the following degradations:\n $(degradations)\nPlease investigate!"
+                exit 1
+            fi
+            echo "Waiting for ability to cut keys..."
+            sleep 5
+            ((counter++))
+        done
+        printf "STUCKLOCK is cleared\n"
+    else
+        printf "No STUCKLOCK found!"
+    fi
+else
+    printf "The kiosk door must be open to clear a stucklock, but it is detected as closed.\n"
+    exit 1
+fi]]></script>
+        <scriptargs />
+      </command>
+    </sequence>
+    <timeout>5m</timeout>
+    <uuid>f4f63096-2b25-45cd-8587-c0aa41a82081</uuid>
+  </job>
+</joblist>
