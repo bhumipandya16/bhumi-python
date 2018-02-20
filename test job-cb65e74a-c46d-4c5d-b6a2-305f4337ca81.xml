@@ -5,7 +5,7 @@
       <excludePrecedence>true</excludePrecedence>
       <keepgoing>false</keepgoing>
       <rankOrder>ascending</rankOrder>
-      <successOnEmptyNodeFilter>false</successOnEmptyNodeFilter>
+      <successOnEmptyNodeFilter>true</successOnEmptyNodeFilter>
       <threadcount>1</threadcount>
     </dispatch>
     <executionEnabled>true</executionEnabled>
@@ -32,7 +32,7 @@
     <sequence keepgoing='false' strategy='node-first'>
       <command>
         <script><![CDATA[echo "howard trying it again "]]></script>
-        <scriptargs />
+       <scriptargs />
       </command>
     </sequence>
     <uuid>cb65e74a-c46d-4c5d-b6a2-305f4337ca81</uuid>
