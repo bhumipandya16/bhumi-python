@@ -1,0 +1,16 @@
+<joblist>
+  <job>
+    <description>sdfsd</description>
+    <executionEnabled>true</executionEnabled>
+    <loglevel>INFO</loglevel>
+    <name>sdfsdf</name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <script><![CDATA[echo "this is rundeck node"]]></script>
+        <scriptargs />
+      </command>
+    </sequence>
+  </job>
+</joblist>
