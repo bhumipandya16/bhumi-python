@@ -9,7 +9,7 @@
     <scheduleEnabled>true</scheduleEnabled>
     <sequence keepgoing='false' strategy='node-first'>
       <command>
-        <script><![CDATA[echo "hello "]]></script>
+        <script><![CDATA[echo "hello how you doing !!!"]]></script>
         <scriptargs />
       </command>
     </sequence>
